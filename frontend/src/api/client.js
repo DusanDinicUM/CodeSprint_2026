@@ -95,4 +95,6 @@ export const api = {
   audit: {
     list: () => request('/audit'),
   },
+
+  resetDb: () => request('/reset-db', { method: 'POST' }),
 }

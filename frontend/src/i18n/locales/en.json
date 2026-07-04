@@ -1,5 +1,11 @@
 {
   "app.name": "Tap For Good",
+  "landing.inspire": "A single tap today can change someone's tomorrow.",
+  "landing.tagline": "Contactless giving, wherever the need is.",
+  "landing.donor": "Make a donation",
+  "landing.donorSubtitle": "Support a cause in just a tap.",
+  "landing.staff": "Charity staff",
+  "landing.staffSubtitle": "Manage campaigns, track donations, and view the ledger.",
   "nav.dashboard": "Dashboard",
   "nav.ledger": "Ledger",
   "nav.admin": "Campaigns",

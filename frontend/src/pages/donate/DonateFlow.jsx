@@ -54,14 +54,14 @@ export default function DonateFlow({ locale }) {
   if (campaign === false) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-paper px-4">
-        <p className="text-ink/60">Campaign not found. <Link to="/" className="text-teal hover:underline">Back to campaigns</Link></p>
+        <p className="text-ink/60">Campaign not found. <Link to="/donate" className="text-teal hover:underline">Back to campaigns</Link></p>
       </div>
     )
   }
 
   return (
     <div className="min-h-screen bg-paper px-4 py-10 flex flex-col items-center">
-      <Link to="/" className="self-start max-w-3xl w-full mx-auto text-sm text-ink/50 hover:underline mb-6">← All campaigns</Link>
+      <Link to="/donate" className="self-start max-w-3xl w-full mx-auto text-sm text-ink/50 hover:underline mb-6">← All campaigns</Link>
 
       {!campaign && <p className="text-ink/50">Loading…</p>}
 

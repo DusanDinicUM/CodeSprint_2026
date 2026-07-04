@@ -89,7 +89,7 @@ export default function Dashboard({ locale }) {
             <XAxis dataKey="label" tick={{ fontSize: 11 }} interval="preserveStartEnd" />
             <YAxis tick={{ fontSize: 11 }} />
             <Tooltip formatter={(value, name) => (name === 'total_eur' ? [`€${value}`, 'Raised'] : [value, 'Donations'])} />
-            <Bar dataKey="total_eur" fill="#1F7A6C" radius={[2, 2, 0, 0]} />
+            <Bar dataKey="total_eur" fill="#127C8A" radius={[2, 2, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>

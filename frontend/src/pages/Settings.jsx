@@ -5,7 +5,7 @@ import { useAccessibility } from '../context/AccessibilityContext'
  * Reachable both publicly (/settings, from the donation app) and by staff
  * (/staff/settings) - the shared Navbar handles navigation for both.
  */
-export default function Settings({ locale, setLocale }) {
+export default function Settings() {
   const { fontScale, setFontScale, highContrast, setHighContrast } = useAccessibility()
 
   return (
@@ -29,14 +29,6 @@ export default function Settings({ locale, setLocale }) {
         >
           {highContrast ? 'On' : 'Off'}
         </button>
-      </div>
-
-      <div className="ledger-tape p-5 flex items-center justify-between">
-        <p className="font-medium">Language</p>
-        <select value={locale} onChange={(e) => setLocale(e.target.value)} className="border border-line rounded-md px-3 py-2">
-          <option value="en">English</option>
-          <option value="mt">Malti</option>
-        </select>
       </div>
     </div>
   )

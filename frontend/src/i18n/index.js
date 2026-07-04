@@ -1,11 +1,11 @@
 /**
- * Minimal i18n (C2.1) - no external dependency needed for a two-language
- * demo. Swap for i18next if the task needs pluralization/interpolation.
+ * Minimal i18n (C2.1) - no external dependency needed. English-only for now;
+ * swap for i18next if the task needs pluralization/interpolation or more
+ * locales come back.
  */
 import en from './locales/en.json'
-import mt from './locales/mt.json'
 
-const DICTS = { en, mt }
+const DICTS = { en }
 
 export function useTranslations(locale) {
   const dict = DICTS[locale] || DICTS.en

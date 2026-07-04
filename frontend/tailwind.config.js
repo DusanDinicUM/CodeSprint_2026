@@ -1,19 +1,31 @@
 /** @type {import('tailwindcss').Config} */
+
+// Colors resolve through CSS custom properties (defined in index.css) instead
+// of literal hex, so [data-contrast="high"] can flip every bg-*/text-*/border-*
+// utility at once - including opacity variants like text-ink/60 - just by
+// reassigning the variables on <html>, with no per-component overrides needed.
+function withOpacity(variableName) {
+  return ({ opacityValue }) =>
+    opacityValue === undefined
+      ? `rgb(var(${variableName}))`
+      : `rgb(var(${variableName}) / ${opacityValue})`
+}
+
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       colors: {
-        ink: '#14213D',
-        paper: '#F3F1EC',
-        coral: '#E8536F',
-        teal: '#1F7A6C',
-        gold: '#D9A441',
-        line: '#DAD5C8',
+        ink: withOpacity('--color-ink'),
+        paper: withOpacity('--color-paper'),
+        coral: withOpacity('--color-coral'),
+        teal: withOpacity('--color-teal'),
+        gold: withOpacity('--color-gold'),
+        line: withOpacity('--color-line'),
       },
       fontFamily: {
         display: ['"Fraunces"', 'serif'],
-        body: ['"Inter"', 'sans-serif'],
+        body: ['"Karla"', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
     },

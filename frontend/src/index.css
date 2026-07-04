@@ -4,6 +4,34 @@
 
 :root {
   --font-scale: 1;
+
+  /* Ocean palette, as RGB triplets (no rgb() wrapper) so Tailwind's
+     rgb(var(--x) / <alpha-value>) opacity syntax works - see tailwind.config.js */
+  --color-ink: 18 48 71;
+  --color-paper: 245 250 252;
+  --color-coral: 240 101 74;
+  --color-teal: 18 124 138;
+  --color-gold: 232 163 61;
+  --color-line: 211 228 234;
+  --color-card: 255 255 255;
+}
+
+/* Accessibility: high-contrast mode (M1.7). Flipping these variables is
+   enough to invert every bg-, text-, and border- utility across the whole
+   app (including opacity variants like text-ink/60), since they all resolve
+   through rgb(var(--color-x) / alpha) rather than baked-in hex. */
+[data-contrast="high"] {
+  --color-ink: 255 255 255;
+  --color-paper: 0 0 0;
+  --color-coral: 255 138 92;
+  --color-teal: 102 230 255;
+  --color-gold: 255 214 10;
+  --color-line: 255 255 255;
+  --color-card: 10 10 10;
+}
+[data-contrast="high"] a,
+[data-contrast="high"] button {
+  outline: 2px solid rgb(var(--color-gold));
 }
 
 html {
@@ -14,29 +42,15 @@ body {
   @apply bg-paper text-ink font-body;
 }
 
-/* Accessibility: high-contrast mode (M1.7) */
-[data-contrast="high"] {
-  --paper: #000000;
-  background: #000000 !important;
-  color: #FFFFFF !important;
-}
-[data-contrast="high"] .card,
-[data-contrast="high"] .ledger-tape {
-  background: #0A0A0A !important;
-  border-color: #FFFFFF !important;
-  color: #FFFFFF !important;
-}
-[data-contrast="high"] a,
-[data-contrast="high"] button {
-  outline: 2px solid #FFD400 !important;
-}
-
 /* Signature element: "ledger tape" card - perforated edge evoking a receipt,
-   used for stat cards + transaction rows to tie the UI to the ledger domain. */
+   used for stat cards + transaction rows to tie the UI to the ledger domain.
+   Uses --color-card (not --color-paper) so the card reads as a shade darker
+   than pure black in high-contrast mode instead of vanishing into the page. */
 .ledger-tape {
-  @apply bg-white border border-line rounded-md relative;
-  background-image: radial-gradient(circle at 0 50%, transparent 6px, white 6.5px),
-                     radial-gradient(circle at 100% 50%, transparent 6px, white 6.5px);
+  @apply border border-line rounded-md relative;
+  background-color: rgb(var(--color-card));
+  background-image: radial-gradient(circle at 0 50%, transparent 6px, rgb(var(--color-card)) 6.5px),
+                     radial-gradient(circle at 100% 50%, transparent 6px, rgb(var(--color-card)) 6.5px);
 }
 
 .tabular {
@@ -46,8 +60,32 @@ body {
 
 /* Visible keyboard focus everywhere */
 :focus-visible {
-  outline: 3px solid #D9A441;
+  outline: 3px solid rgb(var(--color-gold));
   outline-offset: 2px;
+}
+
+/* Entrance animation used across the donation app for staggered reveals
+   (Landing, campaign cards, recent-donations rows) - kept generic so the
+   same class works wherever a fade-up-on-mount reads as "alive". */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Slow, gentle drift for decorative background waves - never load-bearing,
+   purely atmospheric, which is why it's safe to kill under reduced-motion. */
+@keyframes drift {
+  from { background-position-x: 0; }
+  to { background-position-x: -200px; }
+}
+
+/* Repeating wave tile drifting behind hero sections (Landing, campaign
+   picker) - a tileable inline SVG so the drift loops seamlessly. */
+.ocean-waves {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40'%3E%3Cpath d='M0 20 Q50 0 100 20 T200 20 V40 H0 Z' fill='%23127C8A' fill-opacity='0.08'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 200px 40px;
+  animation: drift 14s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

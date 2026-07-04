@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .database import Base, engine
-from .routers import auth, users, campaigns, donations, transactions, dashboard, reconciliation, audit
+from .routers import auth, users, campaigns, donations, transactions, dashboard, reconciliation, audit, reset
 
 Base.metadata.create_all(bind=engine)
 
@@ -28,6 +28,7 @@ app.include_router(transactions.router)
 app.include_router(dashboard.router)
 app.include_router(reconciliation.router)
 app.include_router(audit.router)
+app.include_router(reset.router)
 
 
 @app.get("/health")
