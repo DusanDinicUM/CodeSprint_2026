@@ -78,8 +78,11 @@ class Transaction(Base):
     external_id = Column(String, nullable=True, index=True)  # id from external API, for reconciliation (M2.6)
     payer_name = Column(String, nullable=True)
     is_anonymous = Column(Boolean, default=False)  # donor recognition (C1.3)
-    is_recurring = Column(Boolean, default=False)  # round-up / recurring prototype (S1.1)
+    round_up = Column(Boolean, default=False)       # round-up-next-purchase prototype (S1.1)
+    is_recurring = Column(Boolean, default=False)   # make-this-monthly prototype (S1.1)
     gift_aid = Column(Boolean, default=False)       # tax-deductibility declaration (S1.2)
+    gift_aid_address = Column(Text, nullable=True)  # home address on record for the HMRC reclaim (S1.2) -
+                                                     # kept even when is_anonymous hides payer_name publicly
     failure_reason = Column(String, nullable=True)  # declined / cancelled / offline (M1.6)
     created_at = Column(DateTime, default=datetime.utcnow, index=True)
     campaign_id = Column(String, ForeignKey("campaigns.id"), nullable=True)

@@ -39,8 +39,10 @@ export default function DonateFlow({ locale }) {
       currency: draft.currency,
       is_anonymous: draft.isAnonymous,
       payer_name: draft.payerName,
+      round_up: draft.roundUp,
       is_recurring: draft.isRecurring,
       gift_aid: draft.giftAid,
+      gift_aid_address: draft.giftAidAddress,
       ...payment,
     }
     setOutcome(await api.donations.create(payload))

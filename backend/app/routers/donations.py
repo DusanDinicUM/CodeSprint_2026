@@ -58,8 +58,10 @@ async def create_donation(payload: DonationCreate, db: Session = Depends(get_db)
         payment_method=payload.payment_method,
         payer_name=payload.payer_name,
         is_anonymous=payload.is_anonymous,
+        round_up=payload.round_up,
         is_recurring=payload.is_recurring,
         gift_aid=payload.gift_aid,
+        gift_aid_address=payload.gift_aid_address if payload.gift_aid else None,
         campaign_id=campaign.id,
         status=TransactionStatus.PENDING,
     )

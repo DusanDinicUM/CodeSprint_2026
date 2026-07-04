@@ -40,17 +40,25 @@ export default function Ledger({ locale }) {
     return campaigns.find((c) => c.id === id)?.name || '—'
   }
 
+  async function handleExport(format) {
+    try {
+      await (format === 'csv' ? api.transactions.exportCsv() : api.transactions.exportPdf())
+    } catch {
+      alert(`Could not export ${format.toUpperCase()}. Please try again.`)
+    }
+  }
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <h1 className="font-display text-2xl">{t('ledger.title')}</h1>
         <div className="flex items-center gap-2">
-          <a href={api.transactions.exportCsvUrl()} className="text-sm font-medium border border-line rounded-md px-3 py-1.5 hover:bg-ink/5">
+          <button onClick={() => handleExport('csv')} className="text-sm font-medium border border-line rounded-md px-3 py-1.5 hover:bg-ink/5">
             CSV
-          </a>
-          <a href={api.transactions.exportPdfUrl()} className="text-sm font-medium border border-line rounded-md px-3 py-1.5 hover:bg-ink/5">
+          </button>
+          <button onClick={() => handleExport('pdf')} className="text-sm font-medium border border-line rounded-md px-3 py-1.5 hover:bg-ink/5">
             PDF
-          </a>
+          </button>
         </div>
       </div>
 

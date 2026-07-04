@@ -99,8 +99,10 @@ class DonationCreate(BaseModel):
     card: Optional[CardDetails] = None
     payer_name: Optional[str] = None
     is_anonymous: bool = True
+    round_up: bool = False
     is_recurring: bool = False
     gift_aid: bool = False
+    gift_aid_address: Optional[str] = None
     receipt_email: Optional[EmailStr] = None
     receipt_phone: Optional[str] = None
 
@@ -137,8 +139,10 @@ class TransactionOut(BaseModel):
     payer_name: Optional[str]
     donor_display_name: str
     is_anonymous: bool
+    round_up: bool
     is_recurring: bool
     gift_aid: bool
+    gift_aid_address: Optional[str]
     failure_reason: Optional[str]
     created_at: datetime
     campaign_id: Optional[str]

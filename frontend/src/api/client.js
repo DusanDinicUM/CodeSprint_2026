@@ -27,6 +27,20 @@ async function request(path, options = {}) {
   return contentType.includes('application/json') ? res.json() : res
 }
 
+// A plain <a href> to an auth-gated endpoint never sends the JWT (only
+// fetch() with our own headers does), so file exports have to be fetched
+// as a blob and handed to the browser as an object URL instead.
+async function downloadFile(path, filename) {
+  const res = await request(path)
+  const blob = await res.blob()
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
 export const api = {
   async login(email, password) {
     const form = new URLSearchParams()
@@ -79,8 +93,8 @@ export const api = {
       return request(`/transactions${qs ? `?${qs}` : ''}`)
     },
     create: (data) => request('/transactions', { method: 'POST', body: JSON.stringify(data) }),
-    exportCsvUrl: () => `${BASE_URL}/transactions/export/csv`,
-    exportPdfUrl: () => `${BASE_URL}/transactions/export/pdf`,
+    exportCsv: () => downloadFile('/transactions/export/csv', 'ledger.csv'),
+    exportPdf: () => downloadFile('/transactions/export/pdf', 'ledger.pdf'),
   },
 
   dashboard: {

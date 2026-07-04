@@ -15,7 +15,7 @@ Stack: **FastAPI (Python) backend + React (Vite/Tailwind) frontend**, SQLite by 
 cd backend
 python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-python3 seed.py          # creates demo users + sample campaigns/donations
+python3 seed.py
 uvicorn app.main:app --reload --port 8000
 ```
 `seed.py` creates demo users + sample campaigns/donations
