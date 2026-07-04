@@ -107,11 +107,23 @@ class DonationCreate(BaseModel):
 
 class TransactionCreate(BaseModel):
     reference: str
-    amount: float
+    amount: float = Field(gt=0)
     currency: str = "EUR"
     payer_name: Optional[str] = None
     campaign_id: Optional[str] = None
     external_id: Optional[str] = None
+
+
+class RecentDonationOut(BaseModel):
+    """Public scoreboard feed (M1.1) - deliberately excludes everything
+    except what's safe to show a stranger on the donation front page."""
+    amount: float
+    currency: str
+    donor_display_name: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
 
 
 class TransactionOut(BaseModel):
@@ -123,6 +135,7 @@ class TransactionOut(BaseModel):
     payment_method: PaymentMethod
     external_id: Optional[str]
     payer_name: Optional[str]
+    donor_display_name: str
     is_anonymous: bool
     is_recurring: bool
     gift_aid: bool
@@ -168,3 +181,13 @@ class DashboardStats(BaseModel):
     failed: int
     reconciled: int
     campaigns: list[CampaignProgress] = []
+
+
+class HistoryBucket(BaseModel):
+    """One point in a windowed activity chart - the amount donated *within
+    this bucket*, not a running cumulative total (a small recent donation
+    would be invisible plotted against an all-time total once that total
+    gets large)."""
+    bucket_start: datetime
+    total_eur: float
+    count: int

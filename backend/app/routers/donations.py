@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 
 from ..database import get_db
 from ..models import Campaign, Transaction, TransactionStatus, PaymentMethod
-from ..schemas import DonationCreate, TransactionOut
+from ..schemas import DonationCreate, RecentDonationOut, TransactionOut
 from ..utils.currency import validate_currency
 from ..utils.mastercard import charge_card, CardDeclinedError
 from .dashboard import manager, compute_stats
@@ -20,8 +20,22 @@ from .dashboard import manager, compute_stats
 router = APIRouter(prefix="/donations", tags=["donations"])
 
 
+
 def _gen_reference() -> str:
     return f"DON-{uuid.uuid4().hex[:8].upper()}"
+
+
+@router.get("/recent", response_model=list[RecentDonationOut])
+def recent_donations(db: Session = Depends(get_db)):
+    """Public scoreboard for the donation front page: last 15 completed
+    donations. No auth - same audience as the rest of this router."""
+    return (
+        db.query(Transaction)
+        .filter(Transaction.status == TransactionStatus.COMPLETED)
+        .order_by(Transaction.created_at.desc())
+        .limit(15)
+        .all()
+    )
 
 
 @router.post("", response_model=TransactionOut)
@@ -77,8 +91,7 @@ async def create_donation(payload: DonationCreate, db: Session = Depends(get_db)
 
     if tx.status == TransactionStatus.COMPLETED:
         await manager.broadcast({"type": "donation", "stats": compute_stats(db).model_dump()})
-
-    if tx.status == TransactionStatus.FAILED:
+    elif tx.status == TransactionStatus.FAILED:
         raise HTTPException(status_code=402, detail={"reference": tx.reference, "reason": tx.failure_reason})
 
     return tx

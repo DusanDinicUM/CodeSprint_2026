@@ -64,8 +64,13 @@ export const api = {
       const body = await res.json().catch(() => ({}))
       if (res.ok) return { ok: true, transaction: body }
       if (res.status === 402) return { ok: false, reference: body.detail?.reference, reason: body.detail?.reason }
-      return { ok: false, reason: 'offline', message: body.detail }
+      // Any other non-2xx (400 inactive campaign, 404 unknown campaign, 422
+      // bad currency, ...) is a real validation/business error, not a
+      // connectivity problem - don't mislabel it as 'offline'.
+      return { ok: false, reason: 'error', message: typeof body.detail === 'string' ? body.detail : 'Something went wrong.' }
     },
+
+    recent: () => request('/donations/recent'),
   },
 
   transactions: {
@@ -80,6 +85,7 @@ export const api = {
 
   dashboard: {
     stats: () => request('/dashboard/stats'),
+    history: (window) => request(`/dashboard/history?window=${window}`),
   },
 
   reconciliation: {

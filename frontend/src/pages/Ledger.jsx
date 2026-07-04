@@ -115,7 +115,7 @@ export default function Ledger({ locale }) {
                 <td className="px-4 py-3 tabular">{tx.amount.toFixed(2)}</td>
                 <td className="px-4 py-3">{tx.currency}</td>
                 <td className={`px-4 py-3 font-medium ${STATUS_COLORS[tx.status] || ''}`}>{tx.status}</td>
-                <td className="px-4 py-3">{tx.is_anonymous ? 'Anonymous' : (tx.payer_name || '—')}</td>
+                <td className="px-4 py-3">{tx.donor_display_name || '—'}</td>
                 <td className="px-4 py-3">{campaignName(tx.campaign_id)}</td>
                 <td className="px-4 py-3 tabular text-ink/60">{new Date(tx.created_at).toLocaleString()}</td>
               </tr>

@@ -1,7 +1,9 @@
 """
 Run once to create demo data: `python seed.py`
-Gives you an admin/manager/viewer login and a couple of campaigns with
-donations for the VIVA and demo video without hand-typing data live.
+Gives you a Charity Admin / Volunteer / Auditor login (Role.ADMIN/MANAGER/VIEWER
+internally - see utils/roles.js on the frontend for the display-name mapping)
+and a couple of campaigns with donations for the VIVA and demo video without
+hand-typing data live.
 """
 from datetime import datetime, timedelta
 
@@ -14,15 +16,15 @@ db = SessionLocal()
 
 if not db.query(User).filter(User.email == "admin@codesprint.mt").first():
     db.add_all([
-        User(email="admin@codesprint.mt", full_name="Admin User", role=Role.ADMIN,
+        User(email="admin@codesprint.mt", full_name="Charity Admin", role=Role.ADMIN,
              hashed_password=hash_password("Password123!")),
-        User(email="manager@codesprint.mt", full_name="Manager User", role=Role.MANAGER,
+        User(email="manager@codesprint.mt", full_name="Volunteer", role=Role.MANAGER,
              hashed_password=hash_password("Password123!")),
-        User(email="viewer@codesprint.mt", full_name="Viewer User", role=Role.VIEWER,
+        User(email="auditor@codesprint.mt", full_name="Auditor", role=Role.VIEWER,
              hashed_password=hash_password("Password123!")),
     ])
     db.commit()
-    print("Seeded users: admin@codesprint.mt / manager@codesprint.mt / viewer@codesprint.mt (Password123!)")
+    print("Seeded users: admin@codesprint.mt / manager@codesprint.mt / auditor@codesprint.mt (Password123!)")
 
 if not db.query(Campaign).first():
     winter = Campaign(

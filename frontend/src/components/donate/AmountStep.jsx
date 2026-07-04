@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useTranslations } from '../../i18n'
-
-const CURRENCIES = ['EUR', 'USD', 'GBP']
-const SYMBOLS = { EUR: '€', USD: '$', GBP: '£' }
+import { CURRENCIES, currencySymbol } from '../../utils/currency'
+import ProgressBar from '../ProgressBar'
 
 /**
  * Preset + custom amount entry (M1.2) with a currency selector (M1.5).
@@ -23,9 +22,7 @@ export default function AmountStep({ campaign, locale, onContinue }) {
         <div className="text-4xl mb-2">{campaign.logo_emoji || '💛'}</div>
         <p className="font-medium">{campaign.charity_name}</p>
         <p className="text-sm text-ink/60">{campaign.name}</p>
-        <div className="h-2 rounded-full bg-line overflow-hidden my-3">
-          <div className="h-full bg-teal" style={{ width: `${Math.min(campaign.progress_pct, 100)}%` }} />
-        </div>
+        <div className="my-3"><ProgressBar percent={campaign.progress_pct} /></div>
         <p className="text-xs text-ink/60 tabular">
           €{campaign.raised_amount_eur.toLocaleString()} {t('donate.raised')} of €{campaign.goal_amount.toLocaleString()} {t('donate.goal')}
         </p>
@@ -39,7 +36,7 @@ export default function AmountStep({ campaign, locale, onContinue }) {
             onClick={() => { setAmount(p); setCustom('') }}
             className={`rounded-md py-3 font-display text-lg border ${!custom && amount === p ? 'bg-ink text-paper border-ink' : 'border-line hover:bg-ink/5'}`}
           >
-            {SYMBOLS[currency]}{p}
+            {currencySymbol(currency)}{p}
           </button>
         ))}
       </div>
@@ -62,7 +59,7 @@ export default function AmountStep({ campaign, locale, onContinue }) {
         onClick={() => onContinue({ amount: effectiveAmount, currency })}
         className="w-full bg-ink text-paper rounded-md py-3 font-medium hover:opacity-90 disabled:opacity-40"
       >
-        {t('donate.continue')} — {SYMBOLS[currency]}{valid ? effectiveAmount.toFixed(2) : '0.00'}
+        {t('donate.continue')} — {currencySymbol(currency)}{valid ? effectiveAmount.toFixed(2) : '0.00'}
       </button>
     </div>
   )

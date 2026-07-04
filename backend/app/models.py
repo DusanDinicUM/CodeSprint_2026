@@ -86,6 +86,13 @@ class Transaction(Base):
 
     campaign = relationship("Campaign")
 
+    @property
+    def donor_display_name(self) -> str:
+        """Single source of truth for donor recognition (C1.3) - CSV/PDF
+        exports and the ledger UI all read this instead of re-checking
+        is_anonymous themselves, so the privacy rule can't drift."""
+        return "Anonymous" if self.is_anonymous else (self.payer_name or "")
+
 
 class AuditLog(Base):
     """Every admin action gets logged here (M2.7)."""

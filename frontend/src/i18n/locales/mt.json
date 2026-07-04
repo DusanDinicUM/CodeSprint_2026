@@ -20,6 +20,8 @@
   "login.submit": "Idħol",
 
   "donate.pickCampaign": "Agħżel kawża li trid tappoġġja",
+  "donate.recentDonations": "Donazzjonijiet reċenti",
+  "donate.noDonationsYet": "Għad m'hemm l-ebda donazzjoni — kun l-ewwel!",
   "donate.raised": "miġbur",
   "donate.goal": "mira",
   "donate.donors": "donaturi",
@@ -56,6 +58,7 @@
   "donate.declinedHelp": "Il-karta tiegħek ġiet irrifjutata. Iċċekkja d-dettalji jew ipprova karta oħra.",
   "donate.offline": "Problema ta' konnessjoni",
   "donate.offlineHelp": "Ma stajniex naslu n-network tal-ħlas. Iċċekkja l-konnessjoni tiegħek u erġa' pprova.",
+  "donate.error": "Xi ħaġa marret ħażin",
   "donate.tryAgain": "Erġa' pprova",
   "donate.cancel": "Ikkanċella"
 }

@@ -20,6 +20,8 @@
   "login.submit": "Sign in",
 
   "donate.pickCampaign": "Choose a cause to support",
+  "donate.recentDonations": "Recent donations",
+  "donate.noDonationsYet": "No donations yet — be the first!",
   "donate.raised": "raised",
   "donate.goal": "goal",
   "donate.donors": "donors",
@@ -56,6 +58,7 @@
   "donate.declinedHelp": "Your card was declined. Please check your details or try another card.",
   "donate.offline": "Connection problem",
   "donate.offlineHelp": "We couldn't reach the payment network. Check your connection and try again.",
+  "donate.error": "Something went wrong",
   "donate.tryAgain": "Try again",
   "donate.cancel": "Cancel"
 }

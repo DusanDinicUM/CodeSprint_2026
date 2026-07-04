@@ -19,7 +19,7 @@ def transactions_to_csv(transactions: list[Transaction]) -> io.StringIO:
     for t in transactions:
         writer.writerow([
             t.reference, t.amount, t.currency, t.status.value, t.payment_method.value,
-            "Anonymous" if t.is_anonymous else (t.payer_name or ""),
+            t.donor_display_name,
             t.campaign.name if t.campaign else "",
             t.external_id or "", t.created_at.isoformat(),
         ])
@@ -37,7 +37,7 @@ def transactions_to_pdf(transactions: list[Transaction]) -> io.BytesIO:
     for t in transactions:
         data.append([
             t.reference, f"{t.amount:.2f}", t.currency, t.status.value,
-            "Anonymous" if t.is_anonymous else (t.payer_name or "-"),
+            t.donor_display_name or "-",
             t.campaign.name if t.campaign else "-",
             t.created_at.strftime("%Y-%m-%d %H:%M"),
         ])

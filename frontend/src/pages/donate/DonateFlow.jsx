@@ -43,9 +43,12 @@ export default function DonateFlow({ locale }) {
       gift_aid: draft.giftAid,
       ...payment,
     }
-    const result = await api.donations.create(payload)
-    setOutcome(result)
-    setStep(result.ok ? 'confirmation' : 'declined')
+    setOutcome(await api.donations.create(payload))
+  }
+
+  function retryPayment() {
+    setOutcome(null)
+    setStep('payment')
   }
 
   if (campaign === false) {
@@ -62,14 +65,14 @@ export default function DonateFlow({ locale }) {
 
       {!campaign && <p className="text-ink/50">Loading…</p>}
 
-      {campaign && step === 'amount' && (
+      {campaign && !outcome && step === 'amount' && (
         <AmountStep
           campaign={campaign} locale={locale}
           onContinue={({ amount, currency }) => { setDraft((d) => ({ ...d, amount, currency })); setStep('details') }}
         />
       )}
 
-      {campaign && step === 'details' && (
+      {campaign && !outcome && step === 'details' && (
         <DetailsStep
           locale={locale}
           onBack={() => setStep('amount')}
@@ -77,25 +80,25 @@ export default function DonateFlow({ locale }) {
         />
       )}
 
-      {campaign && step === 'payment' && (
+      {campaign && !outcome && step === 'payment' && (
         <PaymentStep locale={locale} onBack={() => setStep('details')} onSubmit={submitDonation} />
       )}
 
-      {step === 'processing' && (
+      {!outcome && step === 'processing' && (
         <div className="ledger-tape p-8 w-full max-w-sm text-center">
           <div className="w-10 h-10 border-4 border-teal/30 border-t-teal rounded-full animate-spin mx-auto mb-4" />
           <p className="text-ink/60">{t('donate.processing')}</p>
         </div>
       )}
 
-      {step === 'confirmation' && outcome?.ok && (
+      {outcome?.ok && (
         <ConfirmationStep transaction={outcome.transaction} locale={locale} onDonateAgain={resetToStart} />
       )}
 
-      {step === 'declined' && !outcome?.ok && (
+      {outcome && !outcome.ok && (
         <DeclinedStep
-          reason={outcome?.reason} locale={locale}
-          onRetry={() => setStep('payment')}
+          reason={outcome.reason} message={outcome.message} locale={locale}
+          onRetry={retryPayment}
           onCancel={resetToStart}
         />
       )}

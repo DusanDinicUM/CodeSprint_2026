@@ -11,18 +11,10 @@ FIXED_RATES_TO_EUR = {
     "GBP": 1.17,
 }
 
-SYMBOLS = {"EUR": "€", "USD": "$", "GBP": "£"}
-
-
 def to_eur(amount: float, currency: str) -> float:
     if currency not in FIXED_RATES_TO_EUR:
         raise ValueError(f"Unsupported currency: {currency}")
     return round(amount * FIXED_RATES_TO_EUR[currency], 2)
-
-
-def format_amount(amount: float, currency: str) -> str:
-    symbol = SYMBOLS.get(currency, currency + " ")
-    return f"{symbol}{amount:,.2f}"
 
 
 def validate_currency(currency: str) -> None:

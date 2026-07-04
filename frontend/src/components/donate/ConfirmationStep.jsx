@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useTranslations } from '../../i18n'
-
-const SYMBOLS = { EUR: '€', USD: '$', GBP: '£' }
+import { currencySymbol } from '../../utils/currency'
 
 /**
  * Confirmation screen + optional simulated email/SMS receipt (M1.4).
@@ -23,7 +22,7 @@ export default function ConfirmationStep({ transaction, locale, onDonateAgain })
       <div className="w-16 h-16 rounded-full bg-teal/15 text-teal flex items-center justify-center mx-auto mb-4 text-3xl">✓</div>
       <h2 className="font-display text-2xl mb-1">{t('donate.confirmTitle')}</h2>
       <p className="text-ink/60 mb-4">{t('donate.confirmThanks')}</p>
-      <p className="font-display text-3xl tabular mb-1">{SYMBOLS[transaction.currency]}{transaction.amount.toFixed(2)}</p>
+      <p className="font-display text-3xl tabular mb-1">{currencySymbol(transaction.currency)}{transaction.amount.toFixed(2)}</p>
       <p className="text-xs text-ink/50 tabular mb-6">{t('donate.reference')}: {transaction.reference}</p>
 
       {!sent ? (
