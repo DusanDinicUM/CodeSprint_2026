@@ -1,20 +1,15 @@
 import { useAccessibility } from '../context/AccessibilityContext'
-import { useAuth } from '../context/AuthContext'
-import PublicNav from '../components/PublicNav'
 
 /**
  * Accessibility controls (M1.7): text size + high-contrast colour scheme.
  * Reachable both publicly (/settings, from the donation app) and by staff
- * (/staff/settings, where the staff Navbar already provides navigation) -
- * so the public header only renders for the former.
+ * (/staff/settings) - the shared Navbar handles navigation for both.
  */
 export default function Settings({ locale, setLocale }) {
   const { fontScale, setFontScale, highContrast, setHighContrast } = useAccessibility()
-  const { user } = useAuth()
 
   return (
     <div className="max-w-lg mx-auto px-4 py-8">
-      {!user && <PublicNav locale={locale} />}
       <h1 className="font-display text-2xl mb-6">Settings</h1>
 
       <div className="ledger-tape p-5 mb-4">

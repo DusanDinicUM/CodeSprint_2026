@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { useAuth } from './context/AuthContext'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 import Navbar from './components/Navbar'
 import CampaignPicker from './pages/donate/CampaignPicker'
@@ -15,17 +14,10 @@ import Settings from './pages/Settings'
 
 export default function App() {
   const [locale, setLocale] = useState('en')
-  const { user, loading } = useAuth()
-  const location = useLocation()
-  const showNav = user && location.pathname.startsWith('/staff') && location.pathname !== '/staff/login'
-  // The Navbar's "Donation app" link needs to bypass the auto-redirect below
-  // (otherwise a logged-in staff member clicking it would bounce straight
-  // back to their dashboard and could never preview the donor app).
-  const isPreview = new URLSearchParams(location.search).get('preview') === '1'
 
   return (
     <div className="min-h-screen">
-      {showNav && <Navbar locale={locale} />}
+      <Navbar locale={locale} />
       <Routes>
         {/* Public donation app (M1) - no login required */}
         <Route path="/" element={<CampaignPicker locale={locale} />} />
