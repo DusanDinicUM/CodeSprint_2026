@@ -19,8 +19,8 @@ from .models import User, Role
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
-# Role hierarchy: admin > manager > viewer
-ROLE_RANK = {Role.VIEWER: 0, Role.MANAGER: 1, Role.ADMIN: 2}
+# Role hierarchy: admin > manager > auditor
+ROLE_RANK = {Role.AUDITOR: 0, Role.MANAGER: 1, Role.ADMIN: 2}
 
 
 def hash_password(password: str) -> str:
@@ -63,7 +63,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
 
 def require_role(minimum: Role):
-    """Dependency factory: require_role(Role.MANAGER) blocks viewers, allows manager/admin."""
+    """Dependency factory: require_role(Role.MANAGER) blocks auditors, allows manager/admin."""
     def dependency(user: User = Depends(get_current_user)) -> User:
         if ROLE_RANK[user.role] < ROLE_RANK[minimum]:
             raise HTTPException(

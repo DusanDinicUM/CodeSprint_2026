@@ -20,7 +20,7 @@ def gen_id() -> str:
 class Role(str, enum.Enum):
     ADMIN = "admin"       # Charity Admin
     MANAGER = "manager"   # Volunteer
-    VIEWER = "viewer"     # Auditor
+    AUDITOR = "auditor"   # Auditor
 
 
 class User(Base):
@@ -30,7 +30,7 @@ class User(Base):
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     full_name = Column(String, nullable=False)
-    role = Column(Enum(Role), default=Role.VIEWER, nullable=False)
+    role = Column(Enum(Role), default=Role.AUDITOR, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     audit_entries = relationship("AuditLog", back_populates="user")

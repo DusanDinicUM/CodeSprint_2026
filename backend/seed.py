@@ -1,6 +1,6 @@
 """
 Run once to create demo data: `python seed.py`
-Gives you a Charity Admin / Volunteer / Auditor login (Role.ADMIN/MANAGER/VIEWER
+Gives you a Charity Admin / Volunteer / Auditor login (Role.ADMIN/MANAGER/AUDITOR
 internally - see utils/roles.js on the frontend for the display-name mapping)
 and a couple of campaigns with donations for the VIVA and demo video without
 hand-typing data live.
@@ -20,7 +20,7 @@ if not db.query(User).filter(User.email == "admin@codesprint.mt").first():
              hashed_password=hash_password("Password123!")),
         User(email="manager@codesprint.mt", full_name="Volunteer", role=Role.MANAGER,
              hashed_password=hash_password("Password123!")),
-        User(email="auditor@codesprint.mt", full_name="Auditor", role=Role.VIEWER,
+        User(email="auditor@codesprint.mt", full_name="Auditor", role=Role.AUDITOR,
              hashed_password=hash_password("Password123!")),
     ])
     db.commit()

@@ -30,6 +30,7 @@ export default function App() {
         {/* Public donation app (M1) - no login required */}
         <Route path="/" element={<CampaignPicker locale={locale} />} />
         <Route path="/donate/:campaignId" element={<DonateFlow locale={locale} />} />
+        <Route path="/settings" element={<Settings locale={locale} setLocale={setLocale} />} />
 
         {/* Charity staff admin tool (M2) */}
         <Route path="/staff/login" element={<Login locale={locale} />} />

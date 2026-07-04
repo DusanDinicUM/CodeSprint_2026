@@ -20,7 +20,7 @@ uvicorn app.main:app --reload --port 8000
 Demo logins (after seeding), password `Password123!`:
 - `admin@codesprint.mt` — Charity Admin
 - `manager@codesprint.mt` — Volunteer
-- `viewer@codesprint.mt` — Auditor
+- `auditor@codesprint.mt` — Auditor
 
 **Frontend**
 ```bash
@@ -40,7 +40,7 @@ npm run dev              # http://localhost:5173, proxies /api to :8000
 | M1.5 Multi-currency | `backend/app/utils/currency.py`, currency column on `Transaction`, EUR fixed as `PRIMARY_CURRENCY` |
 | M1.6 Graceful error handling | Pydantic validation on all schemas, `try/except` + `HTTPException` in routers, `DeclinedStep.jsx` for declined/offline/error states |
 | M1.7 Accessibility | `AccessibilityContext.jsx` + `Settings.jsx` (text size, high-contrast), `index.css` |
-| M2.1 RBAC | `security.py` (`require_role`), `AuthContext.jsx` (`hasRole`). Roles are Auditor (`viewer`) < Volunteer (`manager`) < Charity Admin (`admin`) internally; `frontend/src/utils/roles.js` maps to the booklet's display names |
+| M2.1 RBAC | `security.py` (`require_role`), `AuthContext.jsx` (`hasRole`). Roles are Auditor (`auditor`) < Volunteer (`manager`) < Charity Admin (`admin`) internally; `frontend/src/utils/roles.js` maps to the booklet's display names |
 | M2.2 Create/manage campaigns | `Campaign` model + `/campaigns` router + `Admin.jsx` |
 | M2.3 Live dashboard | `/dashboard/stats` + `/dashboard/history` (windowed per-bucket donation activity: last hour/24h/30 days) + `/dashboard/ws` WebSocket, `Dashboard.jsx` |
 | M2.4 Transaction ledger | `/transactions` with filter/sort params, `Ledger.jsx` |

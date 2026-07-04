@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
 
   // Role hierarchy mirrors the backend (security.py) so UI can hide
   // controls the user can't use, without duplicating auth logic.
-  const rank = { viewer: 0, manager: 1, admin: 2 }
+  const rank = { auditor: 0, manager: 1, admin: 2 }
   const hasRole = (minimum) => user && rank[user.role] >= rank[minimum]
 
   return (

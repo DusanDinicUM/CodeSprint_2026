@@ -14,7 +14,7 @@ class UserCreate(BaseModel):
     email: EmailStr
     password: str = Field(min_length=8)
     full_name: str
-    role: Role = Role.VIEWER
+    role: Role = Role.AUDITOR
 
 
 class UserOut(BaseModel):

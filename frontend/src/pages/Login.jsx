@@ -49,8 +49,11 @@ export default function Login({ locale }) {
           </button>
         </form>
         <p className="text-xs text-ink/50 mt-6">
-          Demo accounts (after running seed.py) — Password123!:<br />
-          admin@codesprint.mt (Charity Admin) · manager@codesprint.mt (Volunteer) · auditor@codesprint.mt (Auditor)
+          Demo accounts:<br />
+          - admin@codesprint.mt (Charity Admin)<br />
+          - manager@codesprint.mt (Volunteer)<br />
+          - auditor@codesprint.mt (Auditor)<br />
+          Password for all: <span className="font-mono">Password123!</span>
         </p>
       </div>
     </div>

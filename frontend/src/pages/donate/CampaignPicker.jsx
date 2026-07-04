@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { api } from '../../api/client'
 import { useTranslations } from '../../i18n'
 import ProgressBar from '../../components/ProgressBar'
+import PublicNav from '../../components/PublicNav'
 import { currencySymbol } from '../../utils/currency'
 
 /**
@@ -22,10 +23,7 @@ export default function CampaignPicker({ locale }) {
   return (
     <div className="min-h-screen bg-paper px-4 py-10">
       <div className="max-w-3xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="font-display text-3xl">⚡ {t('app.name')}</h1>
-          <Link to="/staff/login" className="text-sm text-ink/50 hover:underline">Charity staff login</Link>
-        </div>
+        <PublicNav locale={locale} />
         <p className="text-ink/60 mb-8">{t('donate.pickCampaign')}</p>
 
         {campaigns === null && <p className="text-ink/50">Loading campaigns…</p>}
