@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-scale: 1;
+}
+
+html {
+  font-size: calc(16px * var(--font-scale));
+}
+
+body {
+  @apply bg-paper text-ink font-body;
+}
+
+/* Accessibility: high-contrast mode (M1.7) */
+[data-contrast="high"] {
+  --paper: #000000;
+  background: #000000 !important;
+  color: #FFFFFF !important;
+}
+[data-contrast="high"] .card,
+[data-contrast="high"] .ledger-tape {
+  background: #0A0A0A !important;
+  border-color: #FFFFFF !important;
+  color: #FFFFFF !important;
+}
+[data-contrast="high"] a,
+[data-contrast="high"] button {
+  outline: 2px solid #FFD400 !important;
+}
+
+/* Signature element: "ledger tape" card - perforated edge evoking a receipt,
+   used for stat cards + transaction rows to tie the UI to the ledger domain. */
+.ledger-tape {
+  @apply bg-white border border-line rounded-md relative;
+  background-image: radial-gradient(circle at 0 50%, transparent 6px, white 6.5px),
+                     radial-gradient(circle at 100% 50%, transparent 6px, white 6.5px);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+  @apply font-mono;
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 3px solid #D9A441;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

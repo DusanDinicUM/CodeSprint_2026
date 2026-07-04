@@ -1,0 +1,13 @@
+C4Container
+title CodeSprintMT Open Category - Containers
+
+Person(user, "User")
+Container(spa, "React SPA", "Vite + React + Tailwind", "Dashboard, Ledger, Admin, Settings")
+Container(api, "FastAPI backend", "Python", "REST + WebSocket API, RBAC, exports")
+ContainerDb(db, "SQLite/Postgres", "SQLAlchemy", "Users, Items, Transactions, Audit logs")
+System_Ext(mastercard, "Mastercard Donate Sandbox")
+
+Rel(user, spa, "Uses", "HTTPS")
+Rel(spa, api, "Calls", "REST + WebSocket (JWT)")
+Rel(api, db, "Reads/writes", "SQL")
+Rel(api, mastercard, "Reconciles transactions", "HTTPS")

@@ -1,0 +1,9 @@
+C4Context
+title CodeSprintMT Open Category - System Context
+
+Person(judge, "Admin / Manager / Viewer", "Uses the ledger app during the demo & VIVA")
+System(app, "CodeSprintMT App", "React frontend + FastAPI backend")
+System_Ext(mastercard, "Mastercard Donate Sandbox", "External payments API used for reconciliation")
+
+Rel(judge, app, "Uses", "HTTPS")
+Rel(app, mastercard, "Fetches transaction records", "HTTPS/REST")
